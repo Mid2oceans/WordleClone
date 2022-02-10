@@ -86,8 +86,10 @@ const handleClick = (key) => {
 } 
 
 const addLetter = (letter) =>{
-    const tile = document.getElementById("guessRow-"+currentRow+"-tile-"+currentTile)
-    tile.textContent = letter;
-    currentTile = currentTile+1
+    if(currentTile < 5){
+        const tile = document.getElementById("guessRow-"+currentRow+"-tile-"+currentTile)
+        tile.textContent = letter;
+        currentTile = currentTile+1
+    }
 }
 
