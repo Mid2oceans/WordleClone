@@ -49,7 +49,7 @@ const guessRows = [
 
 let currentRow = 0;
 let currentTile=0;
-
+let word = "";
 guessRows.forEach((guessRow,guessRowIndex) => {
     const rowElement = document.createElement('div');
     rowElement.setAttribute('id',"guessRow-"+guessRowIndex)
@@ -81,15 +81,64 @@ keys.forEach(key =>{
 
 
 const handleClick = (key) => {
-    console.log("click",key)
+    if(key == "ENTER"){
+        enter()
+    }
+    else{
+
+    // console.log("click",key)
     addLetter(key)
+    }
 } 
 
 const addLetter = (letter) =>{
     if(currentTile < 5){
         const tile = document.getElementById("guessRow-"+currentRow+"-tile-"+currentTile)
         tile.textContent = letter;
+        guessRows[currentRow][currentTile] = letter
         currentTile = currentTile+1
+        tile.setAttribute('data',letter)
+        //This will add letter to the current word
+        word = word+letter;
+        // console.log(guessRows)
     }
+}
+
+const enter = () =>{
+    if(word.length ==5){
+        checkAnswer();
+    }
+    else{
+        //Maybe make them shake 
+    }
+}
+
+const checkAnswer = () =>{
+    // const row = document.getElementById("guessRow-"+currentRow)
+    row = guessRows[currentRow]
+
+    row.forEach((answerLetter,letterIndex) => {
+        const tile = document.getElementById("guessRow-"+currentRow+"-tile-"+letterIndex)
+        let letter = tile.getAttribute("data")
+        let correctLetter = wordle[letterIndex];
+        if(correctLetter == letter){
+            console.log("correct",letter);
+        }
+        else if(wordle.includes(letter)){
+            console.log("its in",letter)
+        }
+        else{
+            console.log(wrong,letter)
+        }
+        
+    })
+    // row.forEach((tile,tileIndex) => {
+    //     console.log(tile.data)
+    //     let letter = tile.data;
+    //     if(letter == wordle[tileIndex]){
+    //         console.log("Right Letter")
+    //     }
+    // })
+    
 }
 
