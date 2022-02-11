@@ -85,6 +85,9 @@ const handleClick = (key) => {
     if(key == "ENTER"){
         enter()
     }
+    else if(key == "⌫"){
+        backspace()
+    }
     else{
 
     // console.log("click",key)
@@ -104,6 +107,17 @@ const addLetter = (letter) =>{
         //This will add letter to the current word
         word = word+letter;
         // console.log(guessRows)
+    }
+}
+
+const backspace =() =>{
+    if(word.length >0){
+        //do minus first because currently we moved to the next block
+        currentTile--;
+        const tile = document.getElementById("guessRow-"+currentRow+"-tile-"+currentTile)
+        tile.textContent = '';
+        word = word.slice(0,-1);
+        
     }
 }
 
