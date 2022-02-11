@@ -3,6 +3,7 @@ const tileDisplay = document.querySelector('.tile-container');
 const keybaord = document.querySelector('.key-container');
 
 const wordle = "SUPER";
+let tempWord = wordle
 
 const keys = [
     'Q',
@@ -92,7 +93,9 @@ const handleClick = (key) => {
 } 
 
 const addLetter = (letter) =>{
+    // console.log(currentTile)
     if(currentTile < 5){
+        // console.log(1)
         const tile = document.getElementById("guessRow-"+currentRow+"-tile-"+currentTile)
         tile.textContent = letter;
         guessRows[currentRow][currentTile] = letter
@@ -111,34 +114,90 @@ const enter = () =>{
     else{
         //Maybe make them shake 
     }
+
+
 }
 
 const checkAnswer = () =>{
     // const row = document.getElementById("guessRow-"+currentRow)
     row = guessRows[currentRow]
+    let correctness = 0
+    tempWord = wordle
 
     row.forEach((answerLetter,letterIndex) => {
         const tile = document.getElementById("guessRow-"+currentRow+"-tile-"+letterIndex)
         let letter = tile.getAttribute("data")
-        let correctLetter = wordle[letterIndex];
-        if(correctLetter == letter){
-            console.log("correct",letter);
-        }
-        else if(wordle.includes(letter)){
-            console.log("its in",letter)
-        }
-        else{
-            console.log(wrong,letter)
-        }
-        
-    })
-    // row.forEach((tile,tileIndex) => {
-    //     console.log(tile.data)
-    //     let letter = tile.data;
-    //     if(letter == wordle[tileIndex]){
-    //         console.log("Right Letter")
-    //     }
-    // })
+        let correctLetter = tempWord[letterIndex]
+        const keyButton = document.getElementById(letter)
+
+
+        setTimeout(()=>{
+            console.log("C:",correctness)
+            console.log(correctLetter,letter,letterIndex,tempWord,wordle,word)
+            tile.classList.add('flip')
+            if(correctLetter == letter){
     
+                console.log("correct",letter);
+                tile.classList.add('correct')
+                tempWord = tempWord.replace(correctLetter,'*')
+                keyButton.classList.add('correctButton')
+                correctness++
+            }
+            else if(tempWord.includes(letter)){
+                
+                // console.log(row)
+                if(letterIndex < 4 && row.slice(letterIndex+1).includes(letter)){
+                    console.log("its in but later too",letter)
+                    tile.classList.add('incorrect')
+                }
+                else{
+                    console.log("its in",letter)
+                    tile.classList.add('inside')
+                }
+                
+                
+            }
+            else{
+    
+                console.log('wrong',letter)
+                if(!wordle.includes(letter)){
+                    keyButton.classList.add('incorrectButton')
+                }
+                tile.classList.add('incorrect')
+                
+                
+            }
+    
+            
+        }, 500* letterIndex)
+
+        })
+
+        // console.log(letterIndex)\
+        // correct
+        // incorrect
+        //  incorrect bc next
+        // 
+        //
+        //
+        //
+
+    console.log("C:",correctness)
+    if(correctness !== 5){
+        notAllCorrect()
+    }
+    
+}
+
+const notAllCorrect = () =>{
+
+    if(currentRow < 6){
+        console.log("reset")
+        currentRow++
+        currentTile = 0
+        word=""
+        tempWord = wordle
+        
+    }
 }
 
