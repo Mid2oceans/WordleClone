@@ -91,15 +91,12 @@ const handleClick = (key) => {
     }
     else{
 
-    // console.log("click",key)
     addLetter(key)
     }
 } 
 
 const addLetter = (letter) =>{
-    // console.log(currentTile)
     if(currentTile < 5){
-        // console.log(1)
         const tile = document.getElementById("guessRow-"+currentRow+"-tile-"+currentTile)
         tile.textContent = letter;
         guessRows[currentRow][currentTile] = letter
@@ -107,7 +104,6 @@ const addLetter = (letter) =>{
         tile.setAttribute('data',letter)
         //This will add letter to the current word
         word = word+letter;
-        // console.log(guessRows)
     }
 }
 
@@ -126,7 +122,6 @@ const enter = () =>{
     if(word.length ==5){
         checkAnswer();
         if(allCorrect == false){
-            console.log(11)
             notAllCorrect()
         }
         else{
@@ -165,8 +160,7 @@ const checkAnswer = () =>{
 
 
         setTimeout(()=>{
-            console.log("C:",allCorrect)
-            console.log(correctLetter,letter,letterIndex,tempWord,wordle,word)
+            // console.log(correctLetter,letter,letterIndex,tempWord,wordle,word)
             tile.classList.add('flip')
             if(correctLetter == letter){
     
@@ -177,7 +171,6 @@ const checkAnswer = () =>{
             }
             else if(tempWord.includes(letter)){
                 
-                // console.log(row)
                 if(letterIndex < 4 && row.slice(letterIndex+1).includes(letter)){
                     console.log("its in but later too",letter)
                     tile.classList.add('incorrect')
@@ -205,16 +198,6 @@ const checkAnswer = () =>{
 
         })
 
-        // console.log(letterIndex)\
-        // correct
-        // incorrect
-        //  incorrect bc next
-        // 
-        //
-        //
-        //
-
-        console.log("C:",allCorrect)
 
     
 }
@@ -244,7 +227,6 @@ const showMessage = (message) =>{
 const notAllCorrect = () =>{
 
     if(currentRow < 6){
-        console.log("reset")
         currentRow++
         currentTile = 0
         word=""
