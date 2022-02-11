@@ -1,10 +1,11 @@
 const tileDisplay = document.querySelector('.tile-container');
-
+const messageDisplay = document.querySelector('.message-container')
 const keybaord = document.querySelector('.key-container');
 
 const wordle = "SUPER";
 let tempWord = wordle
-
+let allCorrect = true
+let messageActive = false
 const keys = [
     'Q',
     'W',
@@ -124,6 +125,19 @@ const backspace =() =>{
 const enter = () =>{
     if(word.length ==5){
         checkAnswer();
+        if(allCorrect == false){
+            console.log(11)
+            notAllCorrect()
+        }
+        else{
+            setTimeout(()=>{
+                showMessage("Magnificent!")
+            }, 500* 5)
+            
+        }
+    }
+    else if(word.length < 5){
+        showMessage("Too Short!")
     }
     else{
         //Maybe make them shake 
@@ -135,7 +149,12 @@ const enter = () =>{
 const checkAnswer = () =>{
     // const row = document.getElementById("guessRow-"+currentRow)
     row = guessRows[currentRow]
-    let correctness = 0
+    allCorrect = true
+    for (let i =0; i<5; i++){
+        if (wordle[i] != guessRows[currentRow][i]){
+            allCorrect = false
+        }
+    }
     tempWord = wordle
 
     row.forEach((answerLetter,letterIndex) => {
@@ -146,7 +165,7 @@ const checkAnswer = () =>{
 
 
         setTimeout(()=>{
-            console.log("C:",correctness)
+            console.log("C:",allCorrect)
             console.log(correctLetter,letter,letterIndex,tempWord,wordle,word)
             tile.classList.add('flip')
             if(correctLetter == letter){
@@ -155,7 +174,6 @@ const checkAnswer = () =>{
                 tile.classList.add('correct')
                 tempWord = tempWord.replace(correctLetter,'*')
                 keyButton.classList.add('correctButton')
-                correctness++
             }
             else if(tempWord.includes(letter)){
                 
@@ -196,11 +214,31 @@ const checkAnswer = () =>{
         //
         //
 
-    console.log("C:",correctness)
-    if(correctness !== 5){
-        notAllCorrect()
-    }
+        console.log("C:",allCorrect)
+
     
+}
+
+const showMessage = (message) =>{
+    if(message == "Magnificent!"){
+        const messageElement = document.createElement('p')
+        messageElement.textContent = message
+        messageDisplay.append(messageElement)
+        messageActive = true;
+    }
+    else if(messageActive == false){
+        const messageElement = document.createElement('p')
+        messageElement.textContent = message
+        messageDisplay.append(messageElement)
+        messageActive = true;
+        setTimeout(()=>{
+            messageActive =false
+            messageDisplay.removeChild(messageElement)
+        }, 500* 4)
+    }
+
+        
+
 }
 
 const notAllCorrect = () =>{
