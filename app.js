@@ -204,10 +204,22 @@ const checkAnswer = () =>{
 
 const showMessage = (message) =>{
     if(message == "Magnificent!"){
-        const messageElement = document.createElement('p')
-        messageElement.textContent = message
-        messageDisplay.append(messageElement)
-        messageActive = true;
+        //if there is a message but it is not the winning one
+        if (messageActive == true && messageElement.textContent != "Magnificent!"  ){
+            const messageElement = document.createElement('p')
+            messageElement.textContent = message
+            messageDisplay.append(messageElement)
+            messageActive = true;
+
+        }
+        if (messageActive == false){
+            const messageElement = document.createElement('p')
+            messageElement.textContent = message
+            messageDisplay.append(messageElement)
+            messageActive = true;
+        }
+        
+
     }
     else if(messageActive == false){
         const messageElement = document.createElement('p')
